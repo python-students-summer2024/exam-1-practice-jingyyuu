@@ -13,6 +13,9 @@ import random
 # The function must return a random integer between these two values, inclusive.
 # Use the function random.randint() to generate the pseudo-random number.
 
+def get_random_int(min_value, max_value):
+    return random.randint(min_value, max_value)
+
 
 ##--------------------- Function #2 ---------------------##
 # Define a function named 'get_guess'.
@@ -23,6 +26,15 @@ import random
 # If the user has guessed the random integer correctly, this function returns a boolean True.
 # If the user has guessed incorrectly, this function returns a boolean False.
 
+def get_guess(max_value):
+    guess = input("Take a guess between 1 to {}".format(max_value))
+    random_int = get_random_int(1, max_value)
+    if not guess.isdigit() or not (1 <= int(guess) <= max_value):
+        return -1
+    if random_int == int(guess):
+        return True
+    else:
+        return False
 
 ##--------------------- Function #3 ---------------------##
 # Define a function named 'play_game'.
@@ -32,3 +44,17 @@ import random
 # If at any time, the user enters an invalid response, the program immediately prints out the text, "Invalid response!" and does not print out anything further.
 # At the end, the function, assuming the user has entered all valid guesses, the program prints out the percent of guesses that user guessed correctly, following the format: "You guessed 75% of the random numbers correctly."
 
+
+def play_game():
+    correct_times = 0
+    for _ in range(4):
+        result = get_guess(5)
+        if result == -1:
+            print("Invalid response!")
+            return
+        elif result:
+            print("Correct!")
+            correct_times += 1
+        else:
+            print("Wrong!")
+    print("You guessed {}% of the random numbers correctly.".format(int((correct_times / 4) * 100)))
